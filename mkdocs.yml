@@ -1,0 +1,52 @@
+site_name: protosignet
+repo_url: https://github.com/phuongho43/protosignet
+site_url: https://phuongho43.github.io/protosignet
+site_description: Generate cell signaling motifs using multi-objective optimization.
+site_author: Phuong Ho
+edit_uri: edit/main/docs/
+repo_name: phuongho43/protosignet
+copyright: Maintained by <a href="https://phuongho43.com">Florian</a>.
+
+nav:
+  - Home: index.md
+  - Modules: modules.md
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [protosignet]
+theme:
+  name: material
+  feature:
+    tabs: true
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/phuongho43/protosignet
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/protosignet
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
