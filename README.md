@@ -1,67 +1,21 @@
 # protosignet
 
-[![Release](https://img.shields.io/github/v/release/phuongho43/protosignet)](https://img.shields.io/github/v/release/phuongho43/protosignet)
-[![Build status](https://img.shields.io/github/actions/workflow/status/phuongho43/protosignet/main.yml?branch=main)](https://github.com/phuongho43/protosignet/actions/workflows/main.yml?query=branch%3Amain)
-[![codecov](https://codecov.io/gh/phuongho43/protosignet/branch/main/graph/badge.svg)](https://codecov.io/gh/phuongho43/protosignet)
-[![Commit activity](https://img.shields.io/github/commit-activity/m/phuongho43/protosignet)](https://img.shields.io/github/commit-activity/m/phuongho43/protosignet)
-[![License](https://img.shields.io/github/license/phuongho43/protosignet)](https://img.shields.io/github/license/phuongho43/protosignet)
-
 Designing network motifs via ODE modeling and NSGA-II.
 
-- **Github repository**: <https://github.com/phuongho43/protosignet/>
-- **Documentation** <https://phuongho43.github.io/protosignet/>
+## Getting Started
 
-## Getting started with your project
-
-### 1. Create a New Repository
-
-First, create a repository on GitHub with the same name as this project, and then run the following commands:
+### 1. Install [UV](https://docs.astral.sh/uv/getting-started/installation/)
 
 ```bash
-git init -b main
-git add .
-git commit -m "init commit"
-git remote add origin git@github.com:phuongho43/protosignet.git
-git push -u origin main
+$ curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### 2. Set Up Your Development Environment
+### 2. Edit Objective Function
 
-Then, install the environment and the pre-commit hooks with
+protosignet/main.py
+
+### 3. Run Code
 
 ```bash
-make install
+$ uv run main
 ```
-
-This will also generate your `uv.lock` file
-
-### 3. Run the pre-commit hooks
-
-Initially, the CI/CD pipeline might be failing due to formatting issues. To resolve those run:
-
-```bash
-uv run pre-commit run -a
-```
-
-### 4. Commit the changes
-
-Lastly, commit the changes made by the two steps above to your repository.
-
-```bash
-git add .
-git commit -m 'Fix formatting issues'
-git push origin main
-```
-
-You are now ready to start development on your project!
-The CI/CD pipeline will be triggered when you open a pull request, merge to main, or when you create a new release.
-
-To finalize the set-up for publishing to PyPI, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/publishing/#set-up-for-pypi).
-For activating the automatic documentation with MkDocs, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/mkdocs/#enabling-the-documentation-on-github).
-To enable the code coverage reports, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/codecov/).
-
-## Releasing a new version
-
----
-
-Repository initiated with [fpgmaas/cookiecutter-uv](https://github.com/fpgmaas/cookiecutter-uv).
