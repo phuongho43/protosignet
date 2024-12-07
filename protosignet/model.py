@@ -3,9 +3,9 @@ import time
 
 import numpy as np
 from joblib import Parallel, delayed
+from prettytable import PrettyTable
 from scipy.integrate import ode
 from scipy.stats.qmc import Halton
-from tabulate import tabulate
 
 
 def sim_signet(tt, uu, kr, ku, kX):
@@ -37,7 +37,7 @@ def sim_signet(tt, uu, kr, ku, kX):
         return dX
 
     solver = ode(model)
-    solver.set_integrator("vode", method="bdf", rtol=1e-6, atol=1e-6, max_step=0.1)
+    solver.set_integrator("vode", method="bdf", rtol=1e-5, atol=1e-5, max_step=0.1)
     solver.set_initial_value(X0)
     sol_t = [tt[0]]
     sol_X = [X0]
@@ -47,6 +47,25 @@ def sim_signet(tt, uu, kr, ku, kX):
         sol_t.append(solver.t)
         sol_X.append(solver.y)
     return np.array(sol_t), np.array(sol_X).T
+
+
+def calc_hypervolume2D(pf_obj, ref):
+    """Calculate the hypervolume indicator for an optimization problem with 2 objectives.
+
+    Args:
+        pf_obj (m x 2 array): m nondominated front individuals by j=2 objectives
+        ref (1 x 2 array): reference point for HV calculation.
+            ref value 1: the minimum value possible for objective 1
+            ref value 2: the minimum value possible for objective 2
+
+    Returns:
+        hv (float): hypervolume value
+    """
+    pf_obj = np.unique(pf_obj, axis=0)  # get unique obj scores and sort by obj 1
+    df1 = np.diff([ref[0], *list(pf_obj[:, 0])])  # rectangle widths
+    df2 = np.abs(pf_obj[:, 1] - ref[1])  # rectangle heights
+    hv = (df1 * df2).sum()
+    return hv
 
 
 class NSGAII:
@@ -75,10 +94,11 @@ class NSGAII:
                 Higher crowding distance is better (more diverse/unique).
     """
 
-    def __init__(self, obj_func, param_space, pop_size, rng_seed=None):
+    def __init__(self, obj_func, param_space, obj_func_kwargs=None, pop_size=100, rng_seed=None):
         self.RNG = np.random.default_rng(rng_seed)
         self.halton = Halton(d=len(param_space))
         self.obj_func = obj_func
+        self.obj_func_kwargs = obj_func_kwargs
         self.param_space = param_space
         self.pop_size = pop_size
         self.population = self.create_random_population(pop_size)
@@ -110,7 +130,7 @@ class NSGAII:
         Returns:
             obj_scores (2D array): array of m individuals by j objective scores
         """
-        obj_scores = Parallel(n_jobs=os.cpu_count())(delayed(self.obj_func)(indiv) for indiv in population)
+        obj_scores = Parallel(n_jobs=os.cpu_count())(delayed(self.obj_func)(indiv, **self.obj_func_kwargs) for indiv in population)
         return np.array(obj_scores)
 
     def dominates(self, p_obj, q_obj):
@@ -351,17 +371,21 @@ class NSGAII:
         self.sort_fronts_ndom()
         self.calc_crowd_dist()
         for gen_i in range(n_gen):
-            # display/save data
+            # record data
             time_i = time.time() - time_0
             data_i = {"elapsed_time": time_i, "generation": gen_i}
-            status_i = [["elapsed_time", time_i], ["generation", gen_i]]
             data_i["objective"] = self.obj_scores.tolist()
             data_i["population"] = self.population.tolist()
+            data.append(data_i)
+            # display progress
+            table = PrettyTable()
+            table.field_names = ["Name", "Value"]
+            table.add_row(["Elapsed Time", f"{time_i:.0f}".rjust(15)])
+            table.add_row(["Generation", f"{gen_i}".rjust(15)])
             max_scores = np.max(self.obj_scores, axis=0)
             for i, s in enumerate(max_scores):
-                status_i.append([f"max_obj_{i}", s])
-            data.append(data_i)
-            print(tabulate(status_i))
+                table.add_row([f"Best Obj {i}", f"{s:.5f}".rjust(15)])
+            print(table)
             # GA steps
             children_pop = self.produce_children(rec_rate, mut_rate, mut_spread)
             children_obj = self.eval_objective(children_pop)
