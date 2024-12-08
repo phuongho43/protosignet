@@ -4,7 +4,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from protosignet.model import NSGAII, sim_signet
+from protosignet.model import sim_signet
+from protosignet.optimizer import NSGAII
 
 
 def obj_func_dual_fm(candidate, n_nodes):
@@ -54,13 +55,13 @@ def obj_func_dual_fm(candidate, n_nodes):
 
 def main():
     # directory path to save results
-    save_dp = Path("/home/phuong/data/protosignet/dual_fm")
+    save_dp = Path("/home/phuong/data/protosignet/dual_fm/data")
     if save_dp.exists():
         input("Directory already exists. Overwrite?...Press ENTER to continue or Ctrl-C to abort.")
     save_dp.mkdir(parents=True, exist_ok=True)
     # save a copy of this script alongside the results
     this_fp = Path(__file__).resolve()
-    copy_fp = save_dp / "settings.txt"
+    copy_fp = save_dp.parent / "settings.txt"
     shutil.copyfile(this_fp, copy_fp)
 
     ## SETTINGS ##
