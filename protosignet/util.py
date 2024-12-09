@@ -79,9 +79,10 @@ def eval_pareto(objectives):
     return np.array(is_pareto)
 
 
-def fetch_indiv(csv_fp, gen_j, pop_k):
-    df = pd.read_csv(Path(csv_fp))
-    pop_rep = df["population"].values
-    pop_gen = np.array(ast.literal_eval(pop_rep[int(gen_j)]))
-    indiv = pop_gen[int(pop_k)]
-    return indiv
+def calc_n_nodes(n_params):
+    x = 0
+    y = 1
+    while y != 0:
+        x += 1
+        y = x**2 + 2 * x - n_params
+    return x
