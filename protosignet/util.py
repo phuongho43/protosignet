@@ -85,4 +85,6 @@ def calc_n_nodes(n_params):
     while y != 0:
         x += 1
         y = x**2 + 2 * x - n_params
+        if x > 10:
+            raise ValueError("n_nodes")
     return x
