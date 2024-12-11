@@ -29,5 +29,11 @@ RC_PARAMS = {
     "xtick.minor.width": 2,
     "ytick.minor.width": 2,
     "legend.fontsize": 48,
+    "legend.handletextpad": 0.4,
+    "legend.labelspacing": 0.2,
+    "legend.handlelength": 1,
     "grid.linewidth": 1,
+    "savefig.dpi": 300,
+    "savefig.bbox": "tight",
+    "savefig.pad_inches": 0.0,
 }
