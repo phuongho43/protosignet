@@ -33,7 +33,7 @@ Repository = "https://github.com/phuongho43/protosignet"
 
 [project.scripts]
 evolve_motifs = "protosignet.evolve_motifs:main"
-plot_results = "protosignet.plot_results:main"
+analyze_motifs = "protosignet.analyze_motifs:main"
 
 [tool.uv]
 dev-dependencies = [

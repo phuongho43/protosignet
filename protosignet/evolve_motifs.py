@@ -55,7 +55,7 @@ def obj_func_dual_fm(candidate, n_nodes):
 
 def main():
     # directory path to save results
-    save_dp = Path("/home/phuong/data/protosignet/dual_fm/data")
+    save_dp = Path("/home/phuong/data/phd-project/0--protosignet/0--dual-fm/data/")
     if save_dp.exists():
         input("Directory already exists. Overwrite?...Press ENTER to continue or Ctrl-C to abort.")
     save_dp.mkdir(parents=True, exist_ok=True)
