@@ -169,13 +169,12 @@ def main():
     kk_test2 = kk_ref.copy()
     kk_test2[1, 1] = 10.0
     kk_test3 = kk_ref.copy()
-    kk_test3[1, 3] = 0.0
-    kk_test3[1, 1] = 10.0
+    kk_test3[1, 2] = 0.0
     save_csv_fp = results_dp / "fm_motif_no_x2_self_activ.csv"
     sim_fm_motif(save_csv_fp, kk_test1)
     save_csv_fp = results_dp / "fm_motif_high_x2_induc.csv"
     sim_fm_motif(save_csv_fp, kk_test2)
-    save_csv_fp = results_dp / "fm_motif_no_x2_self_activ_high_x2_induc.csv"
+    save_csv_fp = results_dp / "fm_motif_no_x2_repr.csv"
     sim_fm_motif(save_csv_fp, kk_test3)
 
 

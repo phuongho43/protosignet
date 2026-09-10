@@ -72,6 +72,8 @@ line-length = 200
 fix = true
 
 [tool.ruff.lint]
+# "x" in a plot axis label is correct typography, not a homoglyph.
+allowed-confusables = ["×", "−", "≈", "·"]
 select = [
     # flake8-2020
     "YTT",
@@ -109,6 +111,13 @@ ignore = [
     "E501",
     # DoNotAssignLambda
     "E731",
+    # Asserts encode invariants in the search scripts (dose-matched regimes); the same
+    # reason tests/* is already exempt below.
+    "S101",
+    # Pushes every exception message into a custom class -- wrong shape for analysis scripts.
+    "TRY003",
+    # A script's main() is expected to be a long sequence.
+    "C901",
 ]
 
 [tool.ruff.lint.per-file-ignores]
