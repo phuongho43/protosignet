@@ -19,14 +19,16 @@ classifiers = [
 ]
 dependencies = [
     "joblib>=1.4.2",
-    "matplotlib>=3.9.3",
     "natsort>=8.4.0",
     "numpy>=2.0.2",
     "pandas>=2.2.3",
     "prettytable>=3.12.0",
     "scipy>=1.13.1",
-    "seaborn>=0.13.2",
 ]
+
+[project.optional-dependencies]
+# modal_app.py runs the searches on Modal; not needed for a local install.
+cloud = ["modal>=0.64"]
 
 [project.urls]
 Repository = "https://github.com/phuongho43/protosignet"
