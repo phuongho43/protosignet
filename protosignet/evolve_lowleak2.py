@@ -100,8 +100,8 @@ def obj_func_lowleak2(candidate, n_nodes):
     c2_iso = _contrast(np.mean(Xsp[1][WIN]), max(np.mean(Xdn[1][WIN]), rest2))
 
     # tracking: the motif must re-select on every alternation, not latch once
-    sp_w = [w for k, w in zip(TRK_SEQ, TRK_WIN) if k == "sparse"]
-    dn_w = [w for k, w in zip(TRK_SEQ, TRK_WIN) if k == "dense"]
+    sp_w = [w for k, w in zip(TRK_SEQ, TRK_WIN, strict=False) if k == "sparse"]
+    dn_w = [w for k, w in zip(TRK_SEQ, TRK_WIN, strict=False) if k == "dense"]
     c1_trk = _contrast(min(np.mean(Xtk[0][w]) for w in dn_w), max(np.mean(Xtk[0][w]) for w in sp_w))
     c2_trk = _contrast(min(np.mean(Xtk[1][w]) for w in sp_w), max(np.mean(Xtk[1][w]) for w in dn_w))
 
