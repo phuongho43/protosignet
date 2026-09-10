@@ -1,0 +1,22 @@
+{
+    "upload_type": "software",
+    "title": "ProtoSigNet: Designing network motifs via ODE modeling and NSGA-II",
+    "description": "Designing network motifs via ODE modeling and NSGA-II. Research software supporting the frequency-modulated optogenetic decoder study. See the repository README for usage.",
+    "creators": [
+        {
+            "name": "Ho, Phuong",
+            "orcid": "0000-0001-7375-0644",
+            "affiliation": "Shu Chien-Gene Lay Department of Bioengineering, University of California, San Diego, La Jolla, CA, USA"
+        }
+    ],
+    "keywords": [
+        "systems biology",
+        "network motifs",
+        "multi-objective optimization",
+        "NSGA-II",
+        "ordinary differential equations",
+        "signaling networks"
+    ],
+    "license": "mit",
+    "access_right": "open"
+}
