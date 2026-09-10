@@ -48,8 +48,8 @@ def obj_func_dual_fm(candidate, n_nodes):
     obj2_X2 = sparse_X2 - dense_X2 - resting_X2
     obj2 = obj2_X1 + obj2_X2
     obj2 = rescale_01(x=obj2, xmin=-4, xmax=2)
-    objectives = [obj1, obj2]
-    objectives = np.array([obj if obj >= 0 and obj <= 1 else 0 for obj in objectives])
+    raw_objectives = [obj1, obj2]
+    objectives = np.array([obj if obj >= 0 and obj <= 1 else 0 for obj in raw_objectives])
     return objectives
 
 

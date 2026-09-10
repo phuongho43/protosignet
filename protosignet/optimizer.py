@@ -1,5 +1,6 @@
 import os
 import time
+from typing import Any
 
 import numpy as np
 from joblib import Parallel, delayed
@@ -32,6 +33,12 @@ class NSGAII:
         cdists (1D array): the crowding distance corresponding to each individual in the population.
                 Higher crowding distance is better (more diverse/unique).
     """
+
+    # Annotation only, no runtime effect. obj_scores is first assigned inside evolve() and then
+    # rebuilt from itself (np.vstack((self.obj_scores, children_obj))), which is circular as far
+    # as inference is concerned -- mypy reported "Cannot determine type" at all ten uses. Stating
+    # the type once resolves every one of them.
+    obj_scores: np.ndarray
 
     def __init__(self, obj_func, param_space, obj_func_kwargs=None, pop_size=100, rng_seed=None):
         self.RNG = np.random.default_rng(rng_seed)
@@ -94,9 +101,9 @@ class NSGAII:
         dominance. This ranking is later used for selecting parents and survivors.
         """
         pop_idx = range(len(self.obj_scores))
-        S = [[] for i in pop_idx]  # set of other indivs that a given indiv dominates
+        S: list[list[int]] = [[] for i in pop_idx]  # set of other indivs that a given indiv dominates
         n = [0 for i in pop_idx]  # count of indivs that dominates a given indiv
-        F = [[]]  # fronts
+        F: list[list[int]] = [[]]  # fronts
         R = [0 for i in pop_idx]  # ranks
         # assign domination set and counts for every individual
         for p in pop_idx:
@@ -130,7 +137,7 @@ class NSGAII:
         or survival selection, this metric is used to distinguish between individuals when they have
         the same front/rank.
         """
-        cdists = [0 for p in range(len(self.obj_scores))]
+        cdists: list[float] = [0.0 for p in range(len(self.obj_scores))]
         for front in self.fronts:
             for j in range(self.obj_scores.shape[1]):
                 # sort front based on objective j
@@ -239,7 +246,7 @@ class NSGAII:
         Returns:
             children (2D array): population of pop_size (m) child individuals by n parameters
         """
-        children = []
+        children: list[Any] = []
         while len(children) < self.pop_size:
             parent1 = self.select_parent()
             parent2 = self.select_parent()
@@ -254,7 +261,7 @@ class NSGAII:
         Apply towards combined parents + children population to reduce the total number of
         individuals down to original population size.
         """
-        new_pop = []
+        new_pop: list[Any] = []
         new_obj = []
         new_cdists = []
         new_fronts = []

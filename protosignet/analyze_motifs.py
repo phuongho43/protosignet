@@ -31,7 +31,7 @@ def prep_obj_addr(save_csv_fp, data_dp):
     """
     save_csv_fp = Path(save_csv_fp)
     save_csv_fp.parent.mkdir(parents=True, exist_ok=True)
-    obj_addr_df = []
+    obj_addr_dfs = []
     for rep_i, rep_csv_fp in enumerate(natsorted(Path(data_dp).glob("*.csv"))):
         rep_df = pd.read_csv(rep_csv_fp)
         for _, row in rep_df.iterrows():
@@ -41,8 +41,8 @@ def prep_obj_addr(save_csv_fp, data_dp):
             obj_df["rep_i"] = np.ones(len(obj_df), dtype=int) * rep_i
             obj_df["gen_j"] = np.ones(len(obj_df), dtype=int) * gen_j
             obj_df["pop_k"] = np.arange(len(obj_df), dtype=int)
-            obj_addr_df.append(obj_df)
-    obj_addr_df = pd.concat(obj_addr_df)
+            obj_addr_dfs.append(obj_df)
+    obj_addr_df = pd.concat(obj_addr_dfs)
     obj_cols = [col for col in obj_addr_df if col.startswith("obj")]
     all_objs = obj_addr_df[obj_cols].to_numpy()
     obj_addr_df["is_pareto"] = eval_is_pareto(all_objs)
