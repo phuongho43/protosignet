@@ -96,7 +96,10 @@ def calc_fm_response(save_csv_fp, indiv):
     kX = indiv[:, 2:]
     fm_ave_df = []
     tu = np.arange(0, 121, 1)
-    periods = [1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32, 36, 40, 50, 60, 70, 80, 90, 100, 121]
+    # 121 dropped Nov 2026: uu[121:121:121] is an EMPTY slice, so that point delivered no
+    # light at all. It was a dark control plotted as a 0.00826 Hz stimulus, and it is the
+    # leftmost marker on the published Figure 1G.
+    periods = [1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32, 36, 40, 50, 60, 70, 80, 90, 100]
     for period in periods:
         freq = 1 / period
         uu = np.zeros_like(tu)
